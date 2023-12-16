@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div >
+    <div class="card" style=" display: block;
+    margin-left: 500px;
+    margin-right: 500px;">
+        <img src="data:image/png;base64,{{ img_str }}" alt="Transformed Image" class="for_img">
+        <br>
+        <br>
+        <br>
+        <div class="card-body text-center" >
+            <div class="mb-3">
+                <label style="width: 150px;" for="filenameInput"  ><h5 class="card-title">Enter filename:</h5></label>
+                <input type="text" class="form-control" id="filenameInput" placeholder="transformed_image.png">
+            </div>
+            <button onclick="saveImage()" class="btn btn-success">Save Transformed Image</button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h5 class="card-title">Would you like to change the visual effect?</h5>
+            <p class="card-text">Return here:</p>
+            <form action="/" method="get"><button class="btn btn-info">Main page</button></form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function saveImage() {
+        var filename = document.getElementById('filenameInput').value || 'transformed_image.png';
+        var imgData = '{{ img_str }}';
+        var blob = base64toBlob(imgData);
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+    }
+
+    function base64toBlob(base64) {
+        var byteString = atob(base64);
+        var arrayBuffer = new ArrayBuffer(byteString.length);
+        var int8Array = new Uint8Array(arrayBuffer);
+
+        for (var i = 0; i < byteString.length; i++) {
+            int8Array[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([int8Array], { type: 'image/png' });
+    }
+</script>
+
+    
+{% endblock %}

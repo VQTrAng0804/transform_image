@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="d-flex justify-content-center">
+        <div class="card" style="width: 25rem;">
+            <img class="card-img-top" src="/static/image.jpg" alt="Card image cap">
+            <div class="card-body text-center">
+                <h5 class="card-title">Transform image with artistic effects</h5>
+                <p class="card-text">Choosing your effect and upload image to transform it!</p>
+                <form action="/" method="post" enctype="multipart/form-data">
+                    <select  name="effect" id="effect" style="width: 15rem;">
+                        <option disabled selected>Effect</option>
+                        <option value="reflection">Reflection</option>
+                        <option value="grayscale">Grayscale</option>
+                        <option value="sepia">Sepia</option>
+                        <option value="deep pencil sketch">Deep pencil sketch</option>
+                        <option value="paler pencil sketch">Paler pencil sketch</option>
+                        <option value="paler blur">Paler blur</option>
+                        <option value="deep blur">Deep blur</option>
+                        <option value="delete back ground">Delete back ground</option>
+                        <option value="negative">Negative</option>
+                        <option value="vintage">Vintage</option>
+                        <option value="fresh">Fresh</option>
+                        <option value="edges">Edges</option>
+                        <option value="bland">Bland</option>
+                    </select>
+                    <br>
+                    <br>
+                    <input type="file" name="image" id="imageInput" accept="image/*" style="display: none;" onchange="updateLabel()">
+                    <label for="imageInput" class="btn btn-outline-secondary" id="chooseImageLabel">Choose Image</label>
+                    <input type="submit" value="Transform" class="btn btn-outline-primary">
+                </form>
+                <br>
+                <br>
+                Curious about how it looks? Click here for a preview:
+                <br>
+                <form action="/preview" method ="get"><button class="btn btn-info">Preview</button></form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateLabel() {
+            var fileInput = document.getElementById('imageInput');
+            var label = document.getElementById('chooseImageLabel');
+            
+            if (fileInput.files.length > 0) {
+                label.innerHTML = 'Selected: ' + fileInput.files[0].name;
+            } else {
+                label.innerHTML = 'Choose Image';
+            }
+        }
+    </script>
+{% endblock %}
